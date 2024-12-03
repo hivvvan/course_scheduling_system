@@ -3,8 +3,8 @@ FactoryBot.define do
     association :teacher
     association :subject
     association :classroom
-    start_time { "08:00" }
-    end_time { "08:50" }
+    start_time { Time.zone.parse("08:00") }
+    end_time { Time.zone.parse("08:50") }
     monday { true }
     wednesday { true }
     friday { true }

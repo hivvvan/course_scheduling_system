@@ -63,7 +63,12 @@ times = [
   { start: "10:00", end: "10:50" },
   { start: "13:00", end: "14:20" },
   { start: "14:30", end: "15:50" }
-]
+].map do |time|
+  {
+    start: Time.zone.parse(time[:start]),
+    end: Time.zone.parse(time[:end])
+  }
+end
 
 Subject.all.each do |subject|
   times.each do |time|
@@ -73,11 +78,11 @@ Subject.all.each do |subject|
       classroom: Classroom.all.sample,
       start_time: time[:start],
       end_time: time[:end],
-      monday: [ true, false ].sample,
-      wednesday: [ true, false ].sample,
-      friday: [ true, false ].sample,
-      tuesday: [ true, false ].sample,
-      thursday: [ true, false ].sample,
+      monday: [true, false].sample,
+      wednesday: [true, false].sample,
+      friday: [true, false].sample,
+      tuesday: [true, false].sample,
+      thursday: [true, false].sample,
       capacity: rand(20..35),
       semester: "Fall",
       year: 2024

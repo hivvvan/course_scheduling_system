@@ -11,16 +11,32 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :teachers
-  resources :subjects
-  resources :classrooms
-  resources :sections
+
+  # Mount PgHero dashboard
+  mount PgHero::Engine, at: "pghero"
+
+  # Add Devise routes for students
+  devise_for :students, path: "", path_names: {
+    sign_in: "login",
+    sign_out: "logout",
+    registration: "register"
+  }
+
+  resources :sections, only: [:index]
 
   namespace :student do
     resource :schedule, only: [ :show ] do
-      post "add_section/:section_id", to: "schedules#add_section", as: :add_section
-      delete "remove_section/:section_id", to: "schedules#remove_section", as: :remove_section
-      get "download_pdf", to: "schedules#download_pdf", as: :download_pdf
+      get :export, on: :member, defaults: { format: "pdf" }
     end
+
+    resources :enrollments, only: [:create, :destroy]
   end
+
+  # Add root route
+  authenticated :student do
+    root "student/schedules#show", as: :authenticated_root
+  end
+
+  resources :dashboard, only: [:index]
+  root 'dashboard#index'
 end

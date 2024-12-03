@@ -28,20 +28,27 @@ class Section < ApplicationRecord
   end
 
   def at_least_one_day_selected
-    unless %w[ monday, tuesday, wednesday, thursday, friday ].any?
+    unless [ monday, tuesday, wednesday, thursday, friday ].any?
       errors.add(:base, "At least one day must be selected")
     end
   end
 
   def within_allowed_hours
-    earliest_allowed = Time.zone.parse("7:30")
-    latest_allowed = Time.zone.parse("22:00")
+    return unless start_time && end_time
 
-    if start_time < earliest_allowed
+    # Convert start_time and end_time to same-day Time objects for comparison
+    current_date = Time.zone.today
+    earliest_allowed = Time.zone.parse("7:30", current_date)
+    latest_allowed = Time.zone.parse("22:00", current_date)
+
+    section_start = Time.zone.parse(start_time.strftime("%H:%M"), current_date)
+    section_end = Time.zone.parse(end_time.strftime("%H:%M"), current_date)
+
+    if section_start < earliest_allowed
       errors.add(:start_time, "cannot be earlier than 7:30 AM")
     end
 
-    if end_time > latest_allowed
+    if section_end > latest_allowed
       errors.add(:end_time, "cannot be later than 10:00 PM")
     end
   end

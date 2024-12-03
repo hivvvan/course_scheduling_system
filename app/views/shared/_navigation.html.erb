@@ -1,0 +1,25 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <%= link_to "University Scheduler", root_path %>
+  </div>
+
+  <div class="navbar-menu">
+    <% if student_signed_in? %>
+      <div class="navbar-items">
+        <%= link_to "My Schedule", student_schedule_path %>
+        <%= link_to "Browse Sections", sections_path %>
+      </div>
+      <div class="navbar-end">
+        <span class="navbar-item">
+          Welcome, <%= current_student.full_name %>
+        </span>
+        <%= button_to "Logout", destroy_student_session_path, method: :delete, class: "button" %>
+      </div>
+    <% else %>
+      <div class="navbar-end">
+        <%= link_to "Login", new_student_session_path, class: "button" %>
+        <%= link_to "Register", new_student_registration_path, class: "button" %>
+      </div>
+    <% end %>
+  </div>
+</nav>

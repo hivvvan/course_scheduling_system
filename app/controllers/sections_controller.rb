@@ -1,8 +1,9 @@
 class SectionsController < ApplicationController
-  before_action :set_section, only: [:show, :edit, :update, :destroy]
+  before_action :set_section, only: [:show]
 
   def index
-    @sections = Section.includes(:teacher, :subject, :classroom).all
+    @sections = Section.includes(:teacher, :subject, :classroom, :students).all
+    @current_student = Student.includes(:sections).find(current_student.id)
   end
 
   def show
@@ -20,8 +21,6 @@ class SectionsController < ApplicationController
       render :new
     end
   end
-
-  # Other CRUD actions...
 
   private
 
