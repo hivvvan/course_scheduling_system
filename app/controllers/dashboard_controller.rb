@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-  skip_before_action :authenticate_student!, only: [:index]
+  skip_before_action :authenticate_student!, only: [ :index ]
 
   def index
     if student_signed_in?

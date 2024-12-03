@@ -22,14 +22,14 @@ Rails.application.routes.draw do
     registration: "register"
   }
 
-  resources :sections, only: [:index]
+  resources :sections, only: [ :index ]
 
   namespace :student do
     resource :schedule, only: [ :show ] do
       get :export, on: :member, defaults: { format: "pdf" }
     end
 
-    resources :enrollments, only: [:create, :destroy]
+    resources :enrollments, only: [ :create, :destroy ]
   end
 
   # Add root route
@@ -37,6 +37,6 @@ Rails.application.routes.draw do
     root "student/schedules#show", as: :authenticated_root
   end
 
-  resources :dashboard, only: [:index]
-  root 'dashboard#index'
+  resources :dashboard, only: [ :index ]
+  root "dashboard#index"
 end

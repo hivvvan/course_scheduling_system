@@ -17,8 +17,8 @@ A robust Rails application for managing university course schedules, student enr
 - Ruby 3.3.6
 - Rails 8.0
 - PostgreSQL 17
-- Redis for caching
-- Kubernetes for deployment
+- Redis for caching (TODO)
+- Kubernetes for deployment (TODO)
 - Devise for authentication
 - RSpec for testing
 

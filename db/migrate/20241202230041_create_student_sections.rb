@@ -7,6 +7,6 @@ class CreateStudentSections < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :student_sections, [:student_id, :section_id], unique: true
+    add_index :student_sections, [ :student_id, :section_id ], unique: true
   end
 end

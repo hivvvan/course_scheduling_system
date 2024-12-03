@@ -44,7 +44,7 @@ gem "prawn"  # For PDF generation
 gem "devise", "~> 4.9"
 gem "faker", "~> 3.5"
 gem "pghero"
-gem 'pg_query', '>= 4.2.1'
+gem "pg_query", ">= 4.2.1"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

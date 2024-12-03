@@ -1,5 +1,5 @@
 class SectionsController < ApplicationController
-  before_action :set_section, only: [:show]
+  before_action :set_section, only: [ :show ]
 
   def index
     @sections = Section.includes(:teacher, :subject, :classroom, :students).all
@@ -16,7 +16,7 @@ class SectionsController < ApplicationController
   def create
     @section = Section.new(section_params)
     if @section.save
-      redirect_to @section, notice: 'Section was successfully created.'
+      redirect_to @section, notice: "Section was successfully created."
     else
       render :new
     end
