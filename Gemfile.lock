@@ -133,6 +133,24 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google-protobuf (4.29.0)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.29.0-aarch64-linux)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.29.0-arm64-darwin)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.29.0-x86-linux)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.29.0-x86_64-darwin)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.29.0-x86_64-linux)
+      bigdecimal
+      rake (>= 13)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     io-console (0.7.2)
@@ -206,6 +224,10 @@ GEM
       racc
     pdf-core (0.10.0)
     pg (1.5.9)
+    pg_query (6.0.0)
+      google-protobuf (>= 3.25.3)
+    pghero (3.6.1)
+      activerecord (>= 6.1)
     prawn (2.5.0)
       matrix (~> 0.4)
       pdf-core (~> 0.10.0)
@@ -215,6 +237,7 @@ GEM
       activesupport (>= 7.0.0)
       rack
       railties (>= 7.0.0)
+    prosopite (1.4.2)
     psych (5.2.1)
       date
       stringio
@@ -406,8 +429,11 @@ DEPENDENCIES
   jsbundling-rails
   kamal
   pg (~> 1.1)
+  pg_query (>= 4.2.1)
+  pghero
   prawn
   propshaft
+  prosopite
   puma (>= 5.0)
   rails (~> 8.0.0)
   rspec-rails (~> 7.1)

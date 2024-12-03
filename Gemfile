@@ -43,8 +43,8 @@ gem "thruster", require: false
 gem "prawn"  # For PDF generation
 gem "devise", "~> 4.9"
 gem "faker", "~> 3.5"
-# gem "prosopite"
-# gem "pghero"
+gem "pghero"
+gem 'pg_query', '>= 4.2.1'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -52,6 +52,7 @@ group :development, :test do
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
+  gem "prosopite" # detect N+1
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
