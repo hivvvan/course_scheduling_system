@@ -1,0 +1,39 @@
+<h1>My Schedule</h1>
+
+<%= link_to 'Download PDF', student_schedule_download_pdf_path(format: :pdf), class: 'button' %>
+
+<table>
+  <thead>
+  <tr>
+    <th>Subject</th>
+    <th>Time</th>
+    <th>Days</th>
+    <th>Teacher</th>
+    <th>Location</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @sections.each do |section| %>
+    <tr>
+      <td><%= section.subject.name %></td>
+      <td><%= section.start_time.strftime("%I:%M %p") %> - <%= section.end_time.strftime("%I:%M %p") %></td>
+      <td>
+        <%= "M" if section.monday %>
+        <%= "T" if section.tuesday %>
+        <%= "W" if section.wednesday %>
+        <%= "Th" if section.thursday %>
+        <%= "F" if section.friday %>
+      </td>
+      <td><%= section.teacher.full_name %></td>
+      <td><%= section.classroom.full_name %></td>
+      <td>
+        <%= button_to 'Remove',
+                      student_schedule_remove_section_path(section_id: section.id),
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' } %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

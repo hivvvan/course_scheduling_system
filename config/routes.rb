@@ -11,4 +11,16 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  resources :teachers
+  resources :subjects
+  resources :classrooms
+  resources :sections
+
+  namespace :student do
+    resource :schedule, only: [ :show ] do
+      post "add_section/:section_id", to: "schedules#add_section", as: :add_section
+      delete "remove_section/:section_id", to: "schedules#remove_section", as: :remove_section
+      get "download_pdf", to: "schedules#download_pdf", as: :download_pdf
+    end
+  end
 end
