@@ -68,16 +68,25 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-
+  config.include Devise::Test::IntegrationHelpers, type: :request
   config.infer_spec_type_from_file_location!
   config.include FactoryBot::Syntax::Methods
-  config.include Devise::Test::IntegrationHelpers, type: :request
-  config.include Devise::Test::ControllerHelpers, type: :controller
 
   Shoulda::Matchers.configure do |config|
     config.integrate do |with|
       with.test_framework :rspec
       with.library :rails
+    end
+  end
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
     end
   end
 end

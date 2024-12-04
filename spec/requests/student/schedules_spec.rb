@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Student::Schedules", type: :request do
+  before(:all) do
+    Devise.mappings[:student] = Devise.add_mapping(:student, {})
+  end
+
   let(:student) { create(:student) }
 
   before do
@@ -8,8 +12,8 @@ RSpec.describe "Student::Schedules", type: :request do
   end
 
   describe "GET /student/schedule" do
-    let!(:section1) { create(:section, start_time: "09:00", end_time: "09:50") }
-    let!(:section2) { create(:section, start_time: "10:00", end_time: "10:50") }
+    let!(:section1) { create(:section, :with_days, start_time: "09:00", end_time: "09:50") }
+    let!(:section2) { create(:section, :with_days, start_time: "10:00", end_time: "10:50") }
 
     before do
       create(:student_section, student: student, section: section1)
@@ -26,7 +30,7 @@ RSpec.describe "Student::Schedules", type: :request do
   end
 
   describe "GET /student/schedule/export" do
-    let!(:section) { create(:section) }
+    let!(:section) { create(:section, :with_days) }
 
     before do
       create(:student_section, student: student, section: section)

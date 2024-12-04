@@ -1,5 +1,4 @@
 class Student::EnrollmentsController < ApplicationController
-  before_action :authenticate_student!
   before_action :set_section, only: [ :create ]
 
   def create

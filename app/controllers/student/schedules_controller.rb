@@ -1,6 +1,4 @@
 class Student::SchedulesController < ApplicationController
-  before_action :authenticate_student!
-
   def show
     @sections = current_student.sections.includes(:teacher, :subject, :classroom)
   end

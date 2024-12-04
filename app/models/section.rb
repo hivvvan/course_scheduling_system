@@ -1,4 +1,6 @@
 class Section < ApplicationRecord
+  STANDARD_DURATION = [ 50, 80 ].freeze
+
   belongs_to :teacher
   belongs_to :subject
   belongs_to :classroom
@@ -22,7 +24,7 @@ class Section < ApplicationRecord
     end
 
     duration = ((end_time - start_time) / 60).to_i
-    unless [ 50, 80 ].include?(duration)
+    unless STANDARD_DURATION.include?(duration)
       errors.add(:base, "Section duration must be either 50 or 80 minutes")
     end
   end

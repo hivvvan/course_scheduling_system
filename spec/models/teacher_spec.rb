@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Teacher, type: :model do
   describe 'validations' do
+    let!(:teacher) { FactoryBot.create(:teacher) }
+
     it { should validate_presence_of(:first_name) }
     it { should validate_presence_of(:last_name) }
     it { should validate_presence_of(:email) }

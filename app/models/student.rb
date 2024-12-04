@@ -32,8 +32,7 @@ class Student < ApplicationRecord
 
   def share_any_days?(section1, section2)
     %w[monday tuesday wednesday thursday friday].any? do |day|
-      # TODO: replace send
-      section1.send(day) && section2.send(day)
+      section1.public_send(day) && section2.public_send(day)
     end
   end
 end

@@ -27,7 +27,7 @@ RSpec.describe "Dashboards", type: :request do
       end
 
       context "with upcoming sections" do
-        let!(:section) { create(:section) }
+        let!(:section) { create(:section, monday: true, wednesday: true) }
         let!(:enrollment) { create(:student_section, student: student, section: section) }
 
         it "shows upcoming sections" do
@@ -37,10 +37,10 @@ RSpec.describe "Dashboards", type: :request do
       end
 
       context "with available sections" do
-        let!(:available_section) { create(:section, capacity: 20) }
+        let!(:available_section) { create(:section, monday: true, capacity: 20) }
 
         it "shows available sections" do
-          get root_path
+          get sections_path
           expect(response.body).to include(available_section.subject.name)
         end
       end
