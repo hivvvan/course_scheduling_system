@@ -1,0 +1,93 @@
+<div class="dashboard">
+  <% if student_signed_in? %>
+    <div class="dashboard-header">
+      <h1>Welcome, <%= current_student.full_name %></h1>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="dashboard-section">
+        <h2>Your Upcoming Classes</h2>
+        <% if @upcoming_sections.any? %>
+          <div class="section-list">
+            <% @upcoming_sections.each do |section| %>
+              <div class="section-card">
+                <h3><%= section.subject.name %></h3>
+                <p>
+                  <%= section.start_time.strftime("%I:%M %p") %> -
+                  <%= section.end_time.strftime("%I:%M %p") %>
+                </p>
+                <p>Professor <%= section.teacher.full_name %></p>
+                <p>Room <%= section.classroom.full_name %></p>
+              </div>
+            <% end %>
+          </div>
+          <%= link_to "View Full Schedule", student_schedule_path, class: "button button-primary" %>
+        <% else %>
+          <p class="empty-state">
+            You haven't enrolled in any classes yet.
+            <%= link_to "Browse Available Sections", sections_path %>
+          </p>
+        <% end %>
+      </div>
+
+      <div class="dashboard-section">
+        <h2>Available Sections</h2>
+        <% if @available_sections.any? %>
+          <div class="section-list">
+            <% @available_sections.each do |section| %>
+              <div class="section-card">
+                <h3><%= section.subject.name %></h3>
+                <p>
+                  <%= section.start_time.strftime("%I:%M %p") %> -
+                  <%= section.end_time.strftime("%I:%M %p") %>
+                </p>
+                <p>Professor <%= section.teacher.full_name %></p>
+                <p>
+                  <%= pluralize(section.capacity - section.students.count, 'spot') %> remaining
+                </p>
+                <%= button_to "Enroll", student_enrollments_path(section_id: section.id),
+                              class: "button button-primary" %>
+              </div>
+            <% end %>
+          </div>
+          <%= link_to "View All Sections", sections_path, class: "button button-secondary" %>
+        <% end %>
+      </div>
+    </div>
+
+  <% else %>
+    <div class="hero-section">
+      <h1>Welcome to University Scheduler</h1>
+      <p>Manage your course schedule efficiently</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3><%= @total_courses %></h3>
+          <p>Available Courses</p>
+        </div>
+        <div class="stat-card">
+          <h3><%= @total_teachers %></h3>
+          <p>Expert Teachers</p>
+        </div>
+      </div>
+
+      <div class="cta-buttons">
+        <%= link_to "Sign Up", new_student_registration_path, class: "button button-primary" %>
+        <%= link_to "Log In", new_student_session_path, class: "button button-secondary" %>
+      </div>
+    </div>
+
+    <div class="featured-subjects">
+      <h2>Featured Subjects</h2>
+      <div class="subjects-grid">
+        <% @featured_subjects.each do |subject| %>
+          <div class="subject-card">
+            <h3><%= subject.name %></h3>
+            <p><%= subject.code %></p>
+            <p><%= truncate(subject.description, length: 100) if subject.description %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

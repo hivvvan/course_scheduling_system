@@ -11,4 +11,32 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  # Mount PgHero dashboard
+  mount PgHero::Engine, at: "pghero"
+
+  # Add Devise routes for students
+  devise_for :students, path: "", path_names: {
+    sign_in: "login",
+    sign_out: "logout",
+    registration: "register"
+  }
+
+  resources :sections, only: [ :index ]
+
+  namespace :student do
+    resource :schedule, only: [ :show ] do
+      get :export, on: :member, defaults: { format: "pdf" }
+    end
+
+    resources :enrollments, only: [ :create, :destroy ]
+  end
+
+  # Add root route
+  authenticated :student do
+    root "student/schedules#show", as: :authenticated_root
+  end
+
+  resources :dashboard, only: [ :index ]
+  root "dashboard#index"
 end

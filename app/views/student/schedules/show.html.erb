@@ -1,0 +1,51 @@
+<div class="schedule-container">
+  <div class="schedule-header">
+    <h1>My Schedule</h1>
+    <%= link_to 'Export PDF', export_student_schedule_path(format: :pdf),
+                class: 'button button-primary' %>
+  </div>
+
+  <% if @sections.any? %>
+    <table class="schedule-table">
+      <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Time</th>
+        <th>Days</th>
+        <th>Teacher</th>
+        <th>Location</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @sections.each do |section| %>
+        <tr>
+          <td><%= section.subject.name %></td>
+          <td>
+            <%= section.start_time.strftime("%I:%M %p") %> -
+            <%= section.end_time.strftime("%I:%M %p") %>
+          </td>
+          <td><%= format_section_days(section) %></td>
+          <td><%= section.teacher.full_name %></td>
+          <td><%= section.classroom.full_name %></td>
+          <td>
+            <%= button_to 'Unenroll',
+                          student_enrollment_path(section.student_sections.find_by(student: current_student)),
+                          method: :delete,
+                          class: 'button button-danger',
+                          data: {
+                            turbo_confirm: 'Are you sure you want to unenroll from this section?'
+                          } %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="empty-state">
+      <p>You haven't enrolled in any sections yet.</p>
+      <%= link_to 'Browse Available Sections', sections_path,
+                  class: 'button button-primary' %>
+    </div>
+  <% end %>
+</div>

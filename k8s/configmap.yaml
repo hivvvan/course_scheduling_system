@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: university-scheduler
+data:
+  DATABASE_HOST: "postgres"
+  DATABASE_USER: "postgres"
+  DATABASE_NAME: "course_scheduling_system_production"
+  REDIS_HOST: "redis"
+  RAILS_ENV: "production"
+  RAILS_LOG_TO_STDOUT: "true"
